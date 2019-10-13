@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
   
   s.name             = 'DVNTUIViewDesignableExtension'
-  s.version          = '1.0.0'
+  s.version          = '1.0.1'
   s.summary          = 'An amazing UIView estension.'
   s.description      = 'A extension that let\'s you set the corner radius, the border width, the border color and the shadows of a view trought Interface Builder.'
   s.homepage         = 'https://www.devinet.es'
