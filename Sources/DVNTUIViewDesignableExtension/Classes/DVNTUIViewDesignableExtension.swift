@@ -6,91 +6,78 @@
 
 import UIKit
 
-import UIKit
-
-extension UIView
-{
+extension UIView {
+    
     @IBInspectable
     var cornerRadius: CGFloat {
-        get {
-            return layer.cornerRadius
-        }
-        set {
-            layer.cornerRadius = newValue
-        }
+        get { return layer.cornerRadius }
+        set { layer.cornerRadius = newValue }
     }
     
     @IBInspectable
     var borderWidth: CGFloat {
-        get {
-            return layer.borderWidth
-        }
-        set {
-            layer.borderWidth = newValue
-        }
+        get { return layer.borderWidth }
+        set { layer.borderWidth = newValue }
     }
     
     @IBInspectable
     var borderColor: UIColor? {
         get {
-            if let color = layer.borderColor {
-                return UIColor(cgColor: color)
-            }
-            return nil
+            guard let cgColor = layer.borderColor else { return nil }
+            return UIColor(cgColor: cgColor)
         }
-        set {
-            if let color = newValue {
-                layer.borderColor = color.cgColor
-            } else {
-                layer.borderColor = nil
-            }
-        }
+        set { layer.borderColor = newValue?.cgColor }
     }
     
     @IBInspectable
     var shadowRadius: CGFloat {
-        get {
-            return layer.shadowRadius
-        }
-        set {
-            layer.shadowRadius = newValue
-        }
+        get { return layer.shadowRadius }
+        set { layer.shadowRadius = newValue }
     }
     
     @IBInspectable
     var shadowOpacity: Float {
-        get {
-            return layer.shadowOpacity
-        }
-        set {
-            layer.shadowOpacity = newValue
-        }
+        get { return layer.shadowOpacity }
+        set { layer.shadowOpacity = newValue }
     }
     
     @IBInspectable
     var shadowOffset: CGSize {
-        get {
-            return layer.shadowOffset
-        }
-        set {
-            layer.shadowOffset = newValue
-        }
+        get { return layer.shadowOffset }
+        set { layer.shadowOffset = newValue }
     }
     
     @IBInspectable
     var shadowColor: UIColor? {
         get {
-            if let color = layer.shadowColor {
-                return UIColor(cgColor: color)
-            }
-            return nil
+            guard let cgColor = layer.shadowColor else { return nil }
+            return UIColor(cgColor: cgColor)
+        }
+        set { layer.shadowColor = newValue?.cgColor }
+    }
+    
+    // Nueva propiedad para hacer la vista circular
+    
+    @IBInspectable
+    var isCircular: Bool {
+        get {
+            return layer.cornerRadius == min(bounds.width, bounds.height) / 2
         }
         set {
-            if let color = newValue {
-                layer.shadowColor = color.cgColor
-            } else {
-                layer.shadowColor = nil
+            if newValue {
+                layer.cornerRadius = min(bounds.width, bounds.height) / 2
+                clipsToBounds = true
             }
         }
+    }
+    
+    // Método para aplicar un degradado de fondo
+    
+    func applyGradient(colors: [UIColor]) {
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.frame = bounds
+        gradientLayer.colors = colors.map { $0.cgColor }
+        gradientLayer.cornerRadius = layer.cornerRadius
+        layer.insertSublayer(gradientLayer, at: 0)
     }
 }
